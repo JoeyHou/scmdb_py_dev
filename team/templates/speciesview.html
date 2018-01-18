@@ -1,41 +1,128 @@
 {%- extends "base.html" %} {% import "bootstrap/utils.html" as utils %} {% block content %}
-<div class="container">
-    {%- with messages = get_flashed_messages(with_categories=True) %} {%- if messages %}
-    <div class="row">
-        <div class="col-md-12">
-            {{utils.flashed_messages(messages)}}
+<div class="Site">
+	<div class="Site-content">
+		<div class="container">
+			{%- with messages = get_flashed_messages(with_categories=True) %} {%- if messages %}
+			<div class="row">
+				<div class="col-md-12">
+					{{utils.flashed_messages(messages)}}
+				</div>
+			</div>
+			{%- endif %} {%- endwith %}
+			<div class="col-md-12">
+				<div class="panel panel-info" id="options-panel">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<h5><a data-toggle="collapse" title="" style="margin-top: 0px;" data-original-title="Collapse Search Options" href="#search-panel-body"> Search <span class="glyphicon glyphicon-chevron-down"></span></a>
+							<a href="#" target="_blank" id="epiBrowserLink" class="btn btn-sm btn-info disabled pull-right" style="margin-top: 0px; margin-right:10px" role="button">
+								<small style="color:white;">Epigenome browser (AnnoJ)</small>
+							</a>
+							</h5>
+						</div>
+					</div>
+					<div class="panel-body collapse in" id="search-panel-body" style="padding-top:10px;">
+						{% include "components/search_options.html" %}
+					</div>
+				</div>
+			</div>
+			<div style="position:relative; left:0; z-index:2;">
+				<div class="col-md-12 col-sm-12">
+					<div class="panel panel-default panel-main" style="overflow-x: auto; margin-left:auto; margin-right:auto;">
+						<div class="panel-heading">
+							<div class="panel-title">
+								<a data-toggle="collapse" title="" href="#cluster_plots" style="margin-top: 0px;" data-original-title="Collapse Search Options"><b>{{ species }}</b> Clustering{% if gene is defined %} - {{ gene }}{% endif %}&nbsp;<span class="glyphicon glyphicon-chevron-down"></span></a>
+								<a data-toggle="collapse" title="" data-placement="left" href=".cluster_options_group" class="btn btn-sm btn-basic pull-right" style="margin-top: 0px;" data-original-title="Collapse Search Options"><span class="glyphicon glyphicon-cog"></span></a>
+							</div>
+						</div>
+						<div class="panel-collapse collapse in" id="cluster_plots">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6 col-sm-12" id="tSNE_cluster_div" style="padding: 0px">
+										{% include "components/tsne_cluster.html" %}
+									</div>
+									<div class="col-md-6 col-sm-12" id="methyl_scatter_div" style="padding: 0px">
+										{% include "components/mch_cluster.html" %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12" style="position:relative; z-index:2;">
+				<div class="panel panel-default panel-main" style="overflow-x: auto; margin-left:auto; margin-right:auto; display:none;" id="methyl_graphs_div">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<a data-toggle="collapse" title="" href="#mch_box" style="margin-top: 0px;">Gene methylation level &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></a>
+							<a data-toggle="collapse" title="" data-placement="left" href="#box-heatmap-options" class="btn btn-sm btn-basic pull-right" style="margin-top: 0px;"><span class="glyphicon glyphicon-cog"></span></a>
+					   </div>
+				   </div>
+				   <div class="panel-collapse collapse in" id="mch_box">
+						<div class="panel-body">
+							<div class="col-md-9 col-sm-12" id="mch_box_div">
+								{% include "components/mch_box.html" %}
+							</div>
+							<div class="col-md-3 col-sm-12" id="gene_table_div">
+								{% include "components/mch_table.html" %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <footer id="footer" class="footer">
+        <div class="line" style="border-bottom: 1px solid #F8F9F3; height:2px">
         </div>
-    </div>
-    {%- endif %} {%- endwith %}
-    <div class="panel panel-default panel-main" style="width: 100%; overflow-x: auto; margin-left:auto; margin-right:auto;">
-        <div class="panel-heading"><b>{{ species }}</b> Clustering{% if gene is defined %} - {{ gene }}{% endif %}</div>
-        <div class="panel-body">
-            {% include "components/tsne_cluster.html" %}
+        <div id="padding" style="height:50px">
         </div>
-    </div>
-    <div class="panel panel-default panel-main" style="min-height:80vh; width: 100%; position:relative; overflow-x: auto; margin-left:auto; margin-right:auto;">
-        <div class="panel-heading">Gene level mCH{% if gene is defined %} - {{ gene }}{% endif %}</div>
-        <div class="panel-body ">
-            {% include "components/mch_config.html" %}
-            <div class="container" style="position:absolute; width:100%; height:auto; z-index:1; left:0;">
-                <table>
-                    <tr>
-                        <td width="60%">{% include "components/mch_cluster.html" %}</td>
-                        <td width="40%" id="mch_table_td">{% include "components/mch_table.html" %}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            {% include "components/mch_box.html" %}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="container" style="position:absolute; width:100%; height:auto;">
-
-            </div>
+        <div class="container">
+            <span class="text-muted">
+                <h2>Contact</h2>
+                <div class="foot_contact">
+                    <address>
+                        <p> Browser developed by: <br>
+                            Tomohiko Ishihara, Tianhao Xiao, and Junhao Li <br>
+                            ({tishihar94} [at] gmail.com, {hox017, jul307} [at] ucsd.edu)
+                        </p>
+                        <br>
+                        Social Sciences Research Building, Floor 2<br>
+                        Dept. of Cognitive Science<br>
+                        University of California, San Diego<br>
+                        9500 Gilman Dr. #0515<br>
+                        La Jolla, CA 92037-0515<br>
+                        <br>
+                    </address>
+                </div>
+                <div class="footbox last">
+                    Web: <a href="http://brainome.ucsd.edu">brainome.ucsd.edu</a><br>
+                    Email: <a href="mailto:lab@brainome.ucsd.edu">lab@brainome.ucsd.edu</a><br>
+                </div>
+            </span>
         </div>
-    </div>
+    </footer>
 </div>
+<!--
+<div id="footer" class="clear">
+	<h2>Contact</h2>
+	<div class="foot_contact">
+		<address>
+			Social Sciences Research Building, Floor 2<br>
+			Dept. of Cognitive Science<br>
+			University of California, San Diego<br>
+			9500 Gilman Dr. #0515<br>
+			La Jolla, CA 92037-0515<br>
+			<br>
+		</address>
+	</div>
+	<div class="footbox last">
+		Web: <a href="http://brainome.ucsd.edu">brainome.ucsd.edu</a><br>
+		<a name="contact">Email: </a><a href="mailto:lab@brainome.ucsd.edu">lab@brainome.ucsd.edu</a><br>
+		<ul>
+		</ul>
+	</div>
+</div>
+-->
 {%- endblock %} {% block scripts %} {{super()}}
 
 <script src="./static/plotly.min.js"></script>
@@ -56,18 +143,14 @@
     var mmu_gID;
     var hsa_gID;
     var grouping;
+    var buttons;
+    var table;
+
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
         $('#outlierToggle').bootstrapToggle();
         $('#orthologsToggle').bootstrapToggle();
         $('#orthologsToggle').bootstrapToggle('disable');
-        $('#toggle-3d').bootstrapToggle('disable');
-
-        loadClusterPlots();
-        randomizeClusterColors();
-        initGeneNameSearch();
-        $('#geneTable').DataTable();
-        initDataTableClick();
 
         // Percentile changes are handled separately, as every change would result in a plot update, but we want
         // this to happen when sliding is actually stopped.
@@ -76,30 +159,104 @@
             max: 1,
             step: 0.05,
             value: [0.05, 0.95],
-            tooltip: 'always',
             tooltip_position: 'bottom'
-        }).on('slideStop', updateGeneElements).data('slider');
+        }).on('slideStop', updateMCHClusterPlot).data('slider');
 
+        table = $('#geneTable').DataTable( {
+            "destroy": true,
+            "ordering": false,
+            "lengthChange": false,
+            "dom": "<'col-sm-12'<f>>" +
+                    "<<t>>" +
+                    "<'col-sm-12'<i>>" +
+                    "<'col-sm-12'<p>>",
+            "pagingType": "simple"
+        });
+        buttons = document.getElementsByClassName('modebar-btn');
 
+        loadClusterPlots();
+        randomizeClusterColors();
+        initGeneNameSearch();
+        initGeneModules();
+        initDataTableClick();
     });
-    $("#mCHLevelCol :input").change(function() {
+
+    $("#methylationLevelDiv :input, #methylationTypeDiv :input").change(function() {
         updateGeneElements();
     });
 
     $("#gene-search-btn").click(function() {
-        if ($("#geneName").select2('data').length == 1) {
-            updateGeneElements();
-            $('#geneTablediv').show();
-            updateDataTable();
-        }
-        else if($("#geneName").select2('data').length > 1) {
-            createHeatMap();
+        updateGeneElements();
+    });
 
-        }
+    //wait for resizing to end, then reset axes.
+    var resizeTimer;
+    $(window).on('resize', function(e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if($("#geneName").select2('data').length > 0){  //if one or more genes have been selected
+                if($('#cluster_plots').hasClass("in")){
+                    try{
+                        buttons[8].click(); //button for autoscaling tsne_cluster
+                        buttons[20].click();  //button for autoscaling mch_cluster
+                    }
+                    catch(err) {
+                        console.log(err);
+                    }
+                }
+                if($('#mch_box').hasClass("in")){
+                    try{
+                        buttons[32].click();  //button for autoscaling mch_box/heatmap
+                    }
+                    catch(err) {
+                        console.log(err);
+                    }
+                }
+            }
+            else{
+                if($('#cluster_plots').hasClass("in")){
+                    try{
+                        buttons[8].click();  //button for autoscaling tsne_cluster
+                    }
+                    catch(err) {
+                        console.log(err);
+                    }
+                }
+            }
+        }, 250);
+    });
+
+    $('#geneModulesSelect').on('select2:select', function(e) {
+        geneNameSelector.val(null).trigger("change");
+        var data = e.params.data;
+        updateSearchWithModules(data);
+    });
+
+    $('#clear-btn').click(function() {
+        geneModuleSelector.val(null).trigger("change");
+        geneNameSelector.val(null).trigger("change");
+        storage.save('lastViewedGenes', [], 5);  // store last viewed genes for 5 minutes
+        $('#gene-search-btn').click();
     });
 
     $("#outlierToggle, #orthologsToggle").change(function() {
-        updateMCHBoxPlot();
+        if ($('#geneName').select2('data').length === 1)
+            updateMCHBoxPlot();
+        else {
+            if ($('#orthologsToggle').prop('checked'))
+                createHeatmapTwoSpecies();
+            else
+                createHeatmap();
+        }
+    });
+
+    $("#normalize-toggle").change(function() {
+        if ($('#geneName').select2('data').length > 1) {
+            if ($('#orthologsToggle').prop('checked'))
+                createHeatmapTwoSpecies();
+            else
+                createHeatmap();
+        }
     });
 
     $("#toggle-3d").change(function() {

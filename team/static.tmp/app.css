@@ -62,10 +62,6 @@ body {
     min-width: 110px !important;
 }
 
-#cluster_plots, #mch_box {
-    height: 70vh;
-}
-
 #plot-mch-heat .bg {
     fill: rgb(169,169,169) !important;
 }

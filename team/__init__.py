@@ -3,11 +3,11 @@ from flask import Flask, current_app
 from flask_mail import Mail
 from flask_appconfig import AppConfig
 from flask_bootstrap import Bootstrap
-from flask_cache import Cache
+from flask_caching import Cache
 from flask_nav import Nav
 from flask_assets import Environment
 from flask_compress import Compress
-from flask.ext.htmlmin import HTMLMIN
+from flask_htmlmin import HTMLMIN
 from flask.json import JSONEncoder
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -16,7 +16,7 @@ from .assets import app_css, app_js, vendor_css, vendor_js
 import urllib.parse
 from flask_wtf import CsrfProtect
 
-cache = Cache()
+cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_THRESHOLD': 1000})
 nav = Nav()
 mail = Mail()
 db = SQLAlchemy()
@@ -58,7 +58,7 @@ def create_app(configfile=None):
     app.config['MAIL_USERNAME'] = ''
     app.config['MAIL_PASSWORD'] = ''
     # EAM : Set limit on the number of items in cache (RAM)
-    cache.init_app(app, config={'CACHE_TYPE': 'simple', 'CACHE_THRESHOLD': 1000})
+    cache.init_app(app)
 
     # Set up asset pipeline
     assets_env = Environment(app)
