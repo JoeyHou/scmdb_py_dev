@@ -5,7 +5,7 @@ venv
 team/static
 team/default_config.py
 team/static/bundle.js
-*sqlite
+*.sqlite
 *.swp
 *.webassets*
 *package-lock.json*

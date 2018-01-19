@@ -6,4 +6,4 @@ cd team
 
 # Serve web app using flask on port 5050
 cd ..
-flask --app=team serve -p 5050
+flask --app=team serve -p 5060
