@@ -699,6 +699,7 @@ def get_cluster_plot(species, grouping):
 
     layout2d = Layout(
         autosize=True,
+        height=450,
         showlegend=True,
         margin={'l': 49,
                 'r': 0,
@@ -768,6 +769,7 @@ def get_cluster_plot(species, grouping):
 
         layout3d = Layout(
             autosize=True,
+            height=450,
             title='3D Cell Cluster',
             titlefont={'color': 'rgba(1,2,2,1)',
                        'size': 16},
@@ -1154,6 +1156,7 @@ def get_methylation_scatter(species, methylationType, query, level, ptile_start,
         hoverinfo='text')
     layout = Layout(
         autosize=True,
+        height=450,
         title=title,
         titlefont={'color': 'rgba(1,2,2,1)',
                    'size': 16},
@@ -1383,6 +1386,7 @@ def get_mch_heatmap(species, methylationType, level, ptile_start, ptile_end, nor
 
     layout = Layout(
         title=title,
+        height=450,
         titlefont={'color': 'rgba(1,2,2,1)',
                    'size': 16},
         autosize=True,
@@ -1652,6 +1656,7 @@ def get_mch_heatmap_two_species(species, methylationType, level, ptile_start, pt
             titlefont={'color': 'rgba(1,2,2,1)',
                        'size': 16},
             autosize=True,
+            height=450,
 
             hovermode='closest'
             )
@@ -1837,7 +1842,7 @@ def get_mch_box(species, methylationType, gene, level, outliers):
 
     layout = Layout(
         autosize=True,
-        height=400,
+        height=450,
         title='Gene body ' + titleMType + ' in each cluster: ' + geneName,
         titlefont={'color': 'rgba(1,2,2,1)',
                    'size': 20},
@@ -1949,8 +1954,8 @@ def get_mch_box_two_species(methylationType, gene_mmu, gene_hsa, level, outliers
     layout = Layout(
         boxmode='group',
         autosize=True,
+        height=450,
         showlegend=False,
-        height=500,
         title='Gene body ' + titleMType + ' in each cluster: ' + geneName,
         titlefont={'color': 'rgba(1,2,2,1)',
                    'size': 20},

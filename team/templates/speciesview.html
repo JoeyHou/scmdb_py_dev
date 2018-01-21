@@ -34,15 +34,14 @@
 								<a data-toggle="collapse" title="" data-placement="left" href=".cluster_options_group" class="btn btn-sm btn-basic pull-right" style="margin-top: 0px;" data-original-title="Collapse Search Options"><span class="glyphicon glyphicon-cog"></span></a>
 							</div>
 						</div>
-						<div class="panel-collapse collapse in" id="cluster_plots">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-6 col-sm-12" id="tSNE_cluster_div" style="padding: 0px">
-										{% include "components/tsne_cluster.html" %}
-									</div>
-									<div class="col-md-6 col-sm-12" id="methyl_scatter_div" style="padding: 0px">
-										{% include "components/mch_cluster.html" %}
-									</div>
+                        <div class="panel-collapse collapse in" id="cluster_plots">
+							<div class="panel-body flex-container">
+                                <div class="col-md-6 col-sm-12 flex-item" id="tSNE_cluster_div" style="padding: 0px">
+                                    {% include "components/tsne_cluster.html" %}
+                                </div>
+                                <div class="col-md-6 col-sm-12 flex-item" id="methyl_scatter_div" style="padding: 0px">
+                                    {% include "components/mch_cluster.html" %}
+                                </div>
 								</div>
 							</div>
 						</div>
