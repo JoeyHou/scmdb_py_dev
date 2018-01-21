@@ -9,3 +9,4 @@ team/static/bundle.js
 *.swp
 *.webassets*
 *package-lock.json*
+*.sh
