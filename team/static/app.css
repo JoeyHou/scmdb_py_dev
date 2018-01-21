@@ -23,14 +23,6 @@ body {
     /* CNDD website colour */
     background-color: #F8F9F3 !important; 
 } 
-#outlierOptions {
-    text-align: right;
-    float: left;
-    right: 10%;
-}
-.panel-heading {
-    font-size:1.5em;
-}
 
 .Site {
     display: flex;
@@ -46,6 +38,19 @@ body {
     width:100%;
 }
 
+#outlierOptions {
+    text-align: right;
+    float: left;
+    right: 10%;
+}
+
+.panel-heading {
+    font-size:1.5em;
+}
+
+.option-panel {
+    height:30px;
+}
 
 .slider {
     width: 80% !important;
