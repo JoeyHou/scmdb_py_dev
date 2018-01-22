@@ -245,14 +245,15 @@ def find_orthologs(mmu_gid=str(), hsa_gid=str()):
     cursor = conn.cursor()
     query_key = 'mmu_gID' if mmu_gid else 'hsa_gID'
     query_value = mmu_gid or hsa_gid
+    query_value = query_value.split('.')[0] + '%'
 
     try:
         cursor.execute(
-            'SELECT * FROM orthologs WHERE {key}=?'.format(key=query_key),
+            'SELECT * FROM orthologs WHERE {key} LIKE ?'.format(key=query_key),
             (query_value,))
     except sqlite3.Error:
         now = datetime.datetime.now()
-        print("[{}] ERROR in app: Could not load top_corr_genes.sqlite3 for {}".format(str(now), species))
+        print("[{}] ERROR in app: Error querying for {} in  orthologs.sqlite3".format(str(now), query_value))
         sys.stdout.flush()
         return {'mmu_gID': None, 'hsa_gID': None}
 
@@ -533,17 +534,18 @@ def get_mult_gene_methylation(species, methylationType, genes):
     if not species_exists(species):
         return []
 
-    datasets_path = '{}/ensembles/{}/datasets'.format(
-            current_app.config['DATA_DIR'], species)
+    datasets_path = '{}/datasets'.format(current_app.config['DATA_DIR'])
 
     df_methyl = pandas.DataFrame()
+    root, dirs, files = next(os.walk(datasets_path))
     for gene in genes:
         if gene_exists(species, methylationType, gene):
-
-            filename = glob.glob('{}/{}/{}/{}*'.format(
-                    datasets_path,
-                    species, methylationType, gene))[0]
-            print(filename)
+            for dir in dirs: 
+                try:
+                    filename = glob.glob('{}/{}/{}/{}/{}*'.format(
+                            root, dir, species, methylationType, gene))[0]
+                except IndexError:
+                    continue
 
             if not filename:
                 now = datetime.datetime.now()
@@ -598,15 +600,15 @@ def get_gene_methylation(species, methylationType, gene, outliers):
 
     cluster = pandas.DataFrame(get_cluster_points(species))
 
-    datasets_path = '{}/ensembles/{}/datasets'.format(
-            current_app.config['DATA_DIR'], species)
+    datasets_path = '{}/datasets'.format(
+            current_app.config['DATA_DIR'])
 
     dataframe_list = []
     root, dirs, files = next(os.walk(datasets_path))
     for dir in dirs:
 
         try:
-            file_string = '{}/{}/{}/{}*'.format(root, dir, methylationType, gene)
+            file_string = '{}/{}/{}/{}/{}*'.format(root, dir, species, methylationType, gene)
             glob_list = glob.glob(file_string)
             filename = glob_list[0]
             
@@ -1480,7 +1482,6 @@ def get_mch_heatmap(species, methylationType, level, ptile_start, ptile_end, nor
         include_plotlyjs=False)
 
 
-@cache.memoize(timeout=3600)
 def get_mch_heatmap_two_species(species, methylationType, level, ptile_start, ptile_end, normalize_row, query):
     """Generate gene body mCH heatmap for two species.
 

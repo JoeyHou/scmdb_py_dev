@@ -190,7 +190,7 @@ def plot_mch_heatmap(species, methylationType, level, ptile_start, ptile_end):
         return get_mch_heatmap(species, methylationType, level, ptile_start, ptile_end, normalize_row, query)
     except (FailToGraphException, ValueError) as e:
         print(e)
-        return 'Failed to produce mCH levels box plot. Contact maintainer.'
+        return 'Failed to produce mCH levels heatmap plot. Contact maintainer.'
 
 @frontend.route('/plot/heat_two_species/<species>/<methylationType>/<level>/<ptile_start>/<ptile_end>')
 def plot_mch_heatmap_two_species(species, methylationType, level, ptile_start, ptile_end):
@@ -203,7 +203,7 @@ def plot_mch_heatmap_two_species(species, methylationType, level, ptile_start, p
         return get_mch_heatmap_two_species(species, methylationType, level, ptile_start, ptile_end, normalize_row, query)
     except (FailToGraphException, ValueError) as e:
         print(e)
-        return 'Failed to produce mCH levels box plot. Contact maintainer.'
+        return 'Failed to produce orthologous mCH levels heatmap plot. Contact maintainer.'
 
 @frontend.route('/gene/names/<species>')
 def search_gene_by_name(species):
