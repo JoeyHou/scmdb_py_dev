@@ -401,7 +401,7 @@ def search_gene_names(species, query):
         query (str): Query string of gene name.
 
     Returns:
-        list: dict of genes found. See gene_id_to_names.csv of each species for dictionary keys. Empty if error during
+        list: dict of genes found. See gene_id_to_names.tsv of each species for dictionary keys. Empty if error during
             searching.
     """
     if not species_exists(species):
@@ -701,7 +701,6 @@ def get_cluster_plot(species, grouping):
 
     layout2d = Layout(
         autosize=True,
-        height=450,
         showlegend=True,
         margin={'l': 49,
                 'r': 0,
@@ -1277,7 +1276,7 @@ def get_methylation_scatter(species, methylationType, query, level, ptile_start,
             'layout': layout
         },
         output_type='div',
-        show_link=True,
+        show_link=False,
         include_plotlyjs=False)
 
 @cache.memoize(timeout=3600)
@@ -1478,7 +1477,7 @@ def get_mch_heatmap(species, methylationType, level, ptile_start, ptile_end, nor
             'layout': layout
         },
         output_type='div',
-        show_link=True,
+        show_link=False,
         include_plotlyjs=False)
 
 
@@ -1778,7 +1777,7 @@ def get_mch_heatmap_two_species(species, methylationType, level, ptile_start, pt
     return plotly.offline.plot(
         figure_or_data=fig,
         output_type='div',
-        show_link=True,
+        show_link=False,
         include_plotlyjs=False)
 
 
@@ -1874,7 +1873,7 @@ def get_mch_box(species, methylationType, gene, level, outliers):
             'mirror': True,
         },
         yaxis={
-            'title': geneName + ' ' + level.capitalize() + ' mCH',
+            'title': geneName + ' ' + level.capitalize() + ' ' + titleMType,
             'titlefont': {
                 'size': 15
             },
@@ -1902,7 +1901,7 @@ def get_mch_box(species, methylationType, gene, level, outliers):
             'layout': layout
         },
         output_type='div',
-        show_link=True,
+        show_link=False,
         include_plotlyjs=False)
 
 
@@ -2062,6 +2061,6 @@ def get_mch_box_two_species(methylationType, gene_mmu, gene_hsa, level, outliers
             'layout': layout
         },
         output_type='div',
-        show_link=True,
+        show_link=False,
         include_plotlyjs=False)
 
