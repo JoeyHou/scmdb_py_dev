@@ -253,6 +253,21 @@ def plot_mch_box(ensemble, methylation_type, gene, grouping, clustering, level, 
         print("ERROR (plot_mch_box): {}".format(e))
         return 'Failed to produce mCH levels box plot. Contact maintainer.'
 
+@frontend.route('/plot/methylation/clusterbar/<ensemble>/<methylation_type>/<grouping>/<clustering>/<level>')
+@cache.memoize(timeout=3600)
+def plot_mch_clusterbar(ensemble, methylation_type, grouping, clustering, level):
+    
+    if clustering == 'null':
+        clustering = 'mCH_lv_npc50_k5'
+    if grouping == 'NaN' or grouping == 'null':
+        grouping = 'annotation'
+
+    try: 
+        return get_mch_clusterbar(ensemble, methylation_type, grouping, clustering, level)
+    except (FailToGraphException, ValueError) as e:
+        print("ERROR (get_mch_clusterbar): {}".format(e))
+        return 'Failed to produce mCH clusters bar plot. Contact maintainer.'
+
 
 @frontend.route('/plot/snATAC/box/<ensemble>/<gene>/<grouping>/<outliers_toggle>')
 @cache.memoize(timeout=3600)

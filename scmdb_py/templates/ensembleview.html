@@ -61,6 +61,7 @@
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li role="presentation" class="active"><a id="methylation-box-tab-btn" href="#methylation-scatter" role="tab" data-toggle="tab">Scatter</a></li>
                                             <li role="presentation"><a id="methylation-box-tab-btn" href="#methylation-box" role="tab" data-toggle="tab" onclick="setTimeout($('#clusterMarkerGeneTable').DataTable().draw,200)">Box plot / Heatmap</a></li>
+                                            <li role="presentation"><a id="methylation-cluster-bar-tab-btn" href="#methylation-cluster-bar" role="tab" data-toggle="tab" onclick="setTimeout($('#clusterMarkerGeneTable').DataTable().draw,200)">Cluster statistics</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-md-12 col-sm-12 flex-item tab-content" id="methyl_scatter_div" style="padding: 0px">
@@ -69,6 +70,9 @@
                                         </div>
                                         <div class="tab-pane" id="methylation-box">
                                             {% include "components/mch_box.html" %}
+                                        </div>
+                                        <div class="tab-pane" id="methylation-cluster-bar">
+                                            {% include "components/methylation-cluster-bar.html" %}
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +110,7 @@
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li role="presentation" class="active"><a id="snATAC-scatter-tab-btn" href="#snATAC-scatter" role="tab" data-toggle="tab">Scatter</a></li>
                                             <li role="presentation"><a id="snATAC-box-tab-btn" href="#snATAC-box" role="tab" data-toggle="tab">Box plot / Heatmap</a></li>
+                                            <li role="presentation"><a id="snATAC-cluster-bar-tab-btn" href="#snATAC-cluster-bar" role="tab" data-toggle="tab">Cluster statistics</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-md-12 col-sm-12 flex-item tab-content" id="snATAC_scatter_div" style="padding: 0px">
@@ -136,12 +141,13 @@
 				   </div>
 				   <div class="panel-collapse collapse in" id="mch_box">
 						<div class="panel-body">
-							<div class="col-md-9 col-sm-12" id="mch_box_div">
+							<div class="col-md-12 col-sm-12" id="mch_box_div">
                                 {% include "components/mch_box.html" %}
 							</div>
+                            <!-- 
 							<div class="col-md-3 col-sm-12" id="gene_table_div">
 								{% include "components/mch_table.html" %}
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -166,6 +172,26 @@
 				</div>
 			</div>
             {% endif %}
+
+            <!-- Bar plots of number of cells per cluster -->
+            <div class="col-sm-12" style="position:relative; z-index:2;">
+                <div class="panel panel-default panel-main" style="overflow-x: auto; margin-left:auto; margin-right:auto; display:none;" id="clusters_barplot_div">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <a data-toggle="collapse" title="" href="#methylation_cluster-bar" style="margin-top: 0px;"><b>Number of cells &nbsp;</b><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <a data-toggle="collapse" title="" data-placement="left" href="#methylation-cluster-bar-options" class="btn btn-sm btn-basic pull-right" style="margin-top: 0px;"><span class="glyphicon glyphicon-cog"></span></a>
+                       </div>
+                   </div>
+                   <div class="panel-collapse collapse in" id="methylation-cluster-bar">
+                        <div class="panel-body">
+                            <div class="col-md-12 col-sm-12" id="methylation-cluster-bar_div">
+                                {% include "components/methylation-cluster-bar.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             #}
 		</div>
 

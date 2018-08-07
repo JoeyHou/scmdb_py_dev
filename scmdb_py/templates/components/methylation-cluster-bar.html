@@ -1,10 +1,10 @@
-<div class="panel-collapse collapse in methylation-plots-options" id="methylation-box-heatmap-options">
+<div class="panel-collapse collapse in methylation-plots-options" id="methylation-cluster-bar-options">
     <div class="panel-body option-panel" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="container">
             <div class="col-md-12">
                 <div class="col-md-offset-2" id="methylation_tsneGrouping">
                     <h6>Grouping: </h6>
-                    <select id="methylation-box-heat-grouping" class="methylation-tsne-grouping methylation-tsne-box-heat-option" name="methylation-box-heat-grouping">
+                    <select id="methylation-cluster-bar-grouping" class="methylation-tsne-grouping methylation-tsne-box-heat-option" name="methylation-cluster-bar-grouping">
                         <option value="cluster" selected>by cluster</option>
                         <option value="annotation">by cluster annotation</option>
                         <option value="dataset">by dataset</option>
@@ -15,7 +15,7 @@
                         {% endif %}
                     </select>
                 </div>
-                <div class="col-sm-12" style="display:flex;">
+                <div>
                     <div class="col-md-offset-2" id="methylation_tsneClustering">
                         <h6>Clustering: </h6>
                         {% if num_algorithm_options > 1 %}
@@ -45,7 +45,7 @@
     -->
                         <div style="display: inline-block">
                             <label for="methylation-clustering-box-heat-k">
-                                <a class="hover-tooltip" href="javascript:void(0);" data-toggle="popover" data-trigger="hover" data-placement="bottom" title="K-value" data-content="Number of nearest neighbors (neighboring cells).">K-value:</a>
+                                <a class="hover-tooltip" href="javascript:void(0);" data-toggle="popover" data-trigger="hover" data-placement="bottom" title="K-value" data-content="Number of nearest neighbors (neighboring cells).">K-value: </a>
                             </label>
                             <select id="methylation-clustering-box-heat-k" class="methylation-clustering-k methylation-tsne-box-heat-option" name="methylation-clustering-box-heat-k"></select>
                         </div>
@@ -55,38 +55,29 @@
                 <div class="col-sm-12" style="display:flex;">
                     <div class="col-md-offset-2">
                         <div style="display: inline-block">
-                            <input id="methylation-box-heat-normalize-toggle" name="methylation-box-heat-normalize-checkbox" value="normalize" type="checkbox">
-                            <label for="methylation-box-heat-normalize-toggle">
+                            <input id="methylation-cluster-bar-normalize-toggle" name="methylation-cluster-bar-normalize-checkbox" value="normalize" type="checkbox">
+                            <label for="methylation-cluster-bar-normalize-toggle">
                                 <a class="hover-tooltip" href="javascript:void(0);" data-toggle="popover" data-trigger="hover" data-placement="bottom" title="Normalize by Gene" data-content="Min-Max normalization across each row. (Only for heatmap).">Normalize by gene</a>
                             </label>
                         </div>
                         <!--<div class="col-sm-12 col-md-1 col-md-offset-4" style="position:relative">-->
                         <div style="display: inline-block;">
                         <!-- <div class="col-md-offset-2"> -->
-                            <button class="btn-sm btn-primary" id="methylation-box-heat-UpdateBtn">Update</button>
+                            <button class="btn-sm btn-primary" id="methylation-cluster-bar-UpdateBtn">Update</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>  
+</div>
 <div class="panel-body" style="padding-top:0px;">
     <div class="container">
         <div class="row">
-            <div id="methylation-box-and-heat">
-                <div id="mch-box-loader" class="loader"></div>
-                <div class="plot-panel" id="plot-mch-box"></div> <!-- boxplots/heatmaps are put into these two divs -->
-                <div class="plot-panel" id="plot-mch-heat"></div>
+            <div class="col-md-12 col-sm-12" id="methylation-cluster-bar">
+                <div id="mch-cluster-bar-loader" class="loader"></div>
+                <div class="plot-panel" id="plot-cluster-bar" style="border-style:dotted;"></div>
             </div>
-<!--             <div class="col-md-4 col-sm-12" id="methylation-correlated-genes">
-                {% include "/components/mch_correlated_genes.html" %}
-            </div>
- -->        
-        </div>
-        <div class="outlierOptions">
-              <input id="methylation-box-heat-outlierToggle" data-toggle="toggle" data-on="Outliers On" data-off="Outliers Off" type="checkbox">
-              <!--<input id="orthologsToggle" data-toggle="toggle" data-on="Ortholog On" data-off="Ortholog Off" type="checkbox">-->
         </div>
     </div>
 </div>

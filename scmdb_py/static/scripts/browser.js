@@ -929,6 +929,7 @@ function updateGeneElements(updateMCHScatter=true) {
             $('#methylation-box-heat-normalize-toggle').prop('disabled', true);
             //updateOrthologToggle();
             updateMCHBoxPlot();
+            updateMCHClusterBarPlot();
             updateCorrelatingGeneDataTable($('#geneName option:selected').val());
             $("#methylation-box-and-heat").removeClass('col-md-12').addClass('col-md-8');
             $("#methylation-correlated-genes").show();
@@ -1181,9 +1182,6 @@ function initClusterSpecificMarkerGeneTable() {
                 "lengthChange": true,
                 "columns": columns,
                 "data": data.rows,
-                "scrollY":        '70vh',
-        		"scrollCollapse": true,
-        		"paging":         false
             });
             clusterMarkerGeneTable.select.items('column');
             delayLoad(clusterMarkerGeneTable.draw());
@@ -1240,8 +1238,34 @@ function updateMCHBoxPlot() {
         },
         success: function(data) {
             $("#plot-mch-box").html(data);
-            $('#gene_table_div').show();
+            // $('#gene_table_div').show();
             $("#methylation-box-heat-UpdateBtn").attr("disabled", false);
+        }
+    });
+
+}
+
+function updateMCHClusterBarPlot() {
+    let levelType = $('input[name=levels]').filter(':checked').val();
+    let methylationType = $('input[name=mType]').filter(':checked').val();
+    let geneSelected = $('#geneName option:selected').val();
+    let grouping = $('#-grouping').val();
+    let clustering = $("#methylation-clustering-box-heat-methylation").val()+"_"+$("#methylation-clustering-box-heat-algorithms").val()+"_npc50"+"_k"+$("#methylation-clustering-box-heat-k").val();
+
+    $.ajax({
+        type: "GET",
+        url: './plot/methylation/clusterbar/'+ensemble+'/'+methylationType+'/'+grouping+'/'+clustering+'/'+levelType,
+        beforeSend: function() {
+            $("#mch-cluster-bar-loader").show();
+            $("#plot-cluster-bar").html("LOADING....");
+            $("#methylation-cluster-bar-UpdateBtn").attr("disabled", true);
+        },
+        complete: function() {
+            $('#mch-cluster-bar-loader').hide();
+        },
+        success: function(data) {
+            $("#plot-cluster-bar").html(data);
+            $("#methylation-cluster-bar-UpdateBtn").attr("disabled", false);
         }
     });
 
@@ -1276,27 +1300,26 @@ function updatesnATACBoxPlot() {
 
 }
 
-function updateMCHCombinedBoxPlot(mmu_gid, hsa_gid) {
-    let levelType = $('input[name=levels]').filter(':checked').val();
-    let methylationType = $('input[name=mType]').filter(':checked').val();
-    if ($('#methylation-box-heat-outlierToggle').prop('checked')) {
-        var outlierOption = 'outliers';
-    } else {
-        var outlierOption = 'false';
-    }
+// function updateMCHCombinedBoxPlot(mmu_gid, hsa_gid) {
+//     let levelType = $('input[name=levels]').filter(':checked').val();
+//     let methylationType = $('input[name=mType]').filter(':checked').val();
+//     if ($('#methylation-box-heat-outlierToggle').prop('checked')) {
+//         var outlierOption = 'outliers';
+//     } else {
+//         var outlierOption = 'false';
+//     }
 
-    $.ajax({
-        type: "GET",
-        url: './plot/box_combined/'+methylationType+'/'+mmu_gid+'/'+hsa_gid+'/'+levelType+'/'+outlierOption,
-        success: function(data) {
-            $('#plot-mch-heat').html("");
-            $('#mch_box_div').addClass("col-md-9");
-            $('#gene_table_div').show();
-            $('#plot-mch-box').html(data);
-        }
-    });
-
-}
+//     $.ajax({
+//         type: "GET",
+//         url: './plot/box_combined/'+methylationType+'/'+mmu_gid+'/'+hsa_gid+'/'+levelType+'/'+outlierOption,
+//         success: function(data) {
+//             $('#plot-mch-heat').html("");
+//             $('#mch_box_div').addClass("col-md-9");
+//             $('#gene_table_div').show();
+//             $('#plot-mch-box').html(data);
+//         }
+//     });
+// }
 
 function updateMethylationHeatmap() {
     let levelType = $('input[name=levels]').filter(':checked').val();
